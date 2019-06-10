@@ -25,7 +25,10 @@ UWAGI:
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.TemporalField;
 import java.util.List;
 
 @AllArgsConstructor
@@ -46,7 +49,7 @@ public class Highway {
         LocalDateTime localDateTimeWjazd = LocalDateTime.now();
         vehicleInfoList.add(new VehicleInfo(nrRejestracyjny, typPojazdu, localDateTimeWjazd));
         System.out.println("Na autostradę wjechał pojazd:\nnr rejestracyjny: " + nrRejestracyjny +
-                "\ntyp pojazdu: " + typPojazdu + "\nczas wjazdu: " + localDateTimeWjazd.getMinute() + ":" + localDateTimeWjazd.getSecond());
+                "\ntyp pojazdu: " + typPojazdu + "\nczas wjazdu: " + localDateTimeWjazd.getHour() + ":" + localDateTimeWjazd.getMinute() + ":" + localDateTimeWjazd.getSecond());
     }
 
     public void serchVehicle(String nrRejestracyjny) {
@@ -77,17 +80,21 @@ public class Highway {
 
                 System.out.println();
                 LocalDateTime localDateTimeWyjazd = LocalDateTime.now();
+                Timestamp timestamp = Timestamp.valueOf(localDateTimeWyjazd);
+                // long czasOdWyjazd;
+                // timestamp.
                 System.out.println("Pojazd opuścił autostradę: \nnr rejestracyjny: " + nrRejestracyjny +
-                        "\nczas wyjazdu: " + localDateTimeWyjazd.getMinute() + ":" + localDateTimeWyjazd.getSecond());
+                        "\nczas wyjazdu: " + localDateTimeWyjazd.getHour() + ":" + localDateTimeWyjazd.getMinute() + ":" + localDateTimeWyjazd.getSecond());
                 long wyjazdMinuty = localDateTimeWyjazd.getMinute();
                 long wyjazdSekundy = localDateTimeWyjazd.getSecond();
                 long kosztPrzejazdu = ((wyjazdMinuty - wjazdMinuty) * 60 + wyjazdSekundy - wjazdSekundy) * oplata;
                 System.out.println();
                 System.out.println("koszt przejazdu autostradą: " + kosztPrzejazdu);
+                // można Duration albo Period
             }
         }
         if (!bylNaAutostradzie) {
-            System.out.println("Takiego pojazdu nie było na autostradzie!");
+            System.out.println("Takiego pojazdu nie ma na autostradzie!");
         }
     }
 }
